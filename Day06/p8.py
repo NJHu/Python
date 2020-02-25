@@ -1,4 +1,8 @@
-from m3 import foo
-from m3 import bar
+def main():
+    print(a)
 
-print("78987")
+
+
+if __name__ == '__main__':
+    a = 100
+    main()
