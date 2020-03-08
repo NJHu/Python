@@ -10,3 +10,5 @@
 - [字典](./Book/Python语言基础/字典.md)
 - [输入](./Book/Python语言基础/输入.md)
 - [函数](./Book/Python语言基础/函数.md)
+- [类](./Book/Python语言基础/类.md)
+- [文件和异常](./Book/Python语言基础/文件和异常.md)
