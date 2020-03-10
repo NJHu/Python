@@ -11,4 +11,6 @@ class Setting():
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_speed_factor = 20
+        self.bullet_allowed = 5
         
+        self.alien_img = './images/alien.bmp'
