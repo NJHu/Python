@@ -4,6 +4,7 @@ from setting import Setting
 from bullet import Bullet
 from pygame.sprite import Sprite
 from alien import Alien
+from time import sleep
 
 def create_aliens(al_setting, screen, aliens, ship_height):
     alien = Alien(al_setting, screen)
@@ -51,14 +52,22 @@ def check_bullets_collisions(al_setting, screen, ship, bullets, aliens):
         create_aliens(al_setting, screen, aliens, ship.rect.height)
 
 
-def update_aliens(al_setting, aliens, ship):
+def update_aliens(al_setting, screen, ship, bullets, aliens, stats):
     check_aliens_edges(al_setting, aliens)
     aliens.update()
-    check_aliens_ship_collisions(aliens, ship)
-
-def check_aliens_ship_collisions(aliens, ship):
     if pygame.sprite.spritecollideany(ship, aliens):
-        print("Ship Shit!")
+        ship_hit(al_setting, screen, ship, bullets, aliens, stats)
+
+def ship_hit(al_setting, screen, ship, bullets, aliens, stats):
+    stats.ship_left -= 1
+    # 清空外星人
+    aliens.empty()
+    bullets.empty()
+    
+    create_aliens(al_setting, screen, aliens, ship.rect.height)
+    ship.ship_center()
+    
+    sleep(1)
 
 def check_aliens_edges(al_setting, aliens):
     for alien in aliens.sprites():

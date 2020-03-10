@@ -29,7 +29,7 @@ def main():
         # 更新位置
         ship.update()
         gf.update_bullets(al_setting, screen, ship, bullets, aliens)
-        gf.update_aliens(al_setting, aliens, ship)
+        gf.update_aliens(al_setting, screen, ship, bullets, aliens, stats)
         # 绘制
         gf.update_screen(al_setting, screen, ship, bullets, aliens)
 
