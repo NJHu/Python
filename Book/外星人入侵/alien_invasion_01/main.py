@@ -7,12 +7,14 @@ import event
 from ship import Ship
 import game_funcations as gf
 from pygame.sprite import Group
+from game_stats import GameStats
 
 def main():
     pygame.init()
     al_setting = Setting()
     bullets = Group()
     aliens = Group()
+    stats = GameStats(al_setting)
     # 设置屏幕
     screen = pygame.display.set_mode((al_setting.screen_width, al_setting.screen_height))
     pygame.display.set_caption(al_setting.game_title)
@@ -26,7 +28,8 @@ def main():
         event.check_event(al_setting, screen, ship, bullets)
         # 更新位置
         ship.update()
-        gf.update_bullets(bullets)
+        gf.update_bullets(al_setting, screen, ship, bullets, aliens)
+        gf.update_aliens(al_setting, aliens, ship)
         # 绘制
         gf.update_screen(al_setting, screen, ship, bullets, aliens)
 
