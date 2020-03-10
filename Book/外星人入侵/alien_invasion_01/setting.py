@@ -15,6 +15,6 @@ class Setting():
         self.bullet_allowed = 5
         
         self.alien_img = './images/alien.bmp'
-        self.alien_speed_factor = 10
+        self.alien_speed_factor = 100
         self.alien_direction = 1
-        self.alien_drop_factor = 20
+        self.alien_drop_factor = 50
