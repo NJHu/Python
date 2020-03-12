@@ -21,13 +21,7 @@ def check_event(al_setting, screen, ship, bullets, play_button, stats, aliens):
             
 def check_play_button(al_setting, screen, ship, bullets, play_button, stats, aliens, mouse_x, mouse_y):
     if play_button.rect.collidepoint(mouse_x, mouse_y) and not stats.game_active:
-        stats.game_active = True
-        stats.reset_stats()
-        ship.ship_center()
-        bullets.empty()
-        aliens.empty()
-        gf.create_aliens(al_setting, screen, aliens, ship.rect.height)
-        pygame.mouse.set_visible(False)
+        gf.reset_game_state(al_setting, screen, ship, bullets, stats, aliens)
         
 def check_keyup_events(event, ship, stats):
     if not stats.game_active:

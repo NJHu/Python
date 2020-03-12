@@ -50,7 +50,7 @@ def check_bullets_collisions(al_setting, screen, ship, bullets, aliens):
     if len(aliens) == 0:
         bullets.empty()
         create_aliens(al_setting, screen, aliens, ship.rect.height)
-
+        al_setting.increase_speed()
 
 def update_aliens(al_setting, screen, ship, bullets, aliens, stats):
     check_aliens_edges(al_setting, aliens)
@@ -79,6 +79,15 @@ def check_aliens_bottom(al_setting, screen, ship, bullets, aliens, stats):
             ship_hit(al_setting, screen, ship, bullets, aliens, stats)
             break
     
+def reset_game_state(al_setting, screen, ship, bullets, stats, aliens):
+    al_setting.initialize_dynamic_settings()
+    stats.game_active = True
+    stats.reset_stats()
+    ship.ship_center()
+    bullets.empty()
+    aliens.empty()
+    create_aliens(al_setting, screen, aliens, ship.rect.height)
+    pygame.mouse.set_visible(False)
 
 def check_aliens_edges(al_setting, aliens):
     for alien in aliens.sprites():
