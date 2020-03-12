@@ -70,6 +70,7 @@ def ship_hit(al_setting, screen, ship, bullets, aliens, stats):
         sleep(1)
     else:
         stats.game_active = False
+        pygame.mouse.set_visible(True)
 
 def check_aliens_bottom(al_setting, screen, ship, bullets, aliens, stats):
     screen_rect = screen.get_rect()
@@ -97,7 +98,7 @@ def fire_bullet(al_setting, screen, ship, bullets):
         new_bullet = Bullet(screen, al_setting, ship)
         bullets.add(new_bullet)
 
-def update_screen(al_setting, screen, ship, bullets, aliens):
+def update_screen(al_setting, screen, ship, bullets, aliens, play_button, stats):
     # 每次循环都重新绘制屏幕, 一定要先绘制颜色
         screen.fill(al_setting.bg_color)
         # 绘制飞船
@@ -109,5 +110,9 @@ def update_screen(al_setting, screen, ship, bullets, aliens):
         # for alien in aliens.sprites():
         #     alien.blitme()
         aliens.draw(screen)
+        
+        if stats.game_active == False:
+            play_button.blitme()
+        
         # 让屏幕可见
         pygame.display.flip()
