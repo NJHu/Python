@@ -9,6 +9,7 @@ import game_funcations as gf
 from pygame.sprite import Group
 from game_stats import GameStats
 from button import Button
+from scoreboard import Storeboard
 
 def main():
     pygame.init()
@@ -21,6 +22,7 @@ def main():
     pygame.display.set_caption(al_setting.game_title)
     
     play_button = Button(al_setting, screen, 'Start')
+    
     # 创建飞船
     ship = Ship(screen, al_setting)
     # 创建外星人
