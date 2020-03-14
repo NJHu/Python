@@ -7,7 +7,7 @@ import game_funcations as gf
 
 # event.type == pygame.KEYDOWN and 
 
-def check_event(al_setting, screen, ship, bullets, play_button, stats, aliens):
+def check_event(al_setting, screen, ship, bullets, play_button, stats, aliens, score_board):
     for event in pygame.event.get():
         if (event.type == pygame.QUIT) or (event.type == pygame.KEYDOWN and event.key == pygame.K_q):
             sys.exit()
@@ -17,11 +17,11 @@ def check_event(al_setting, screen, ship, bullets, play_button, stats, aliens):
             check_keyup_events(event, ship, stats)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(al_setting, screen, ship, bullets, play_button, stats, aliens, mouse_x, mouse_y)
+            check_play_button(al_setting, screen, ship, bullets, play_button, stats, aliens, mouse_x, mouse_y, score_board)
             
-def check_play_button(al_setting, screen, ship, bullets, play_button, stats, aliens, mouse_x, mouse_y):
+def check_play_button(al_setting, screen, ship, bullets, play_button, stats, aliens, mouse_x, mouse_y, score_board):
     if play_button.rect.collidepoint(mouse_x, mouse_y) and not stats.game_active:
-        gf.reset_game_state(al_setting, screen, ship, bullets, stats, aliens)
+        gf.reset_game_state(al_setting, screen, ship, bullets, stats, aliens, score_board)
         
 def check_keyup_events(event, ship, stats):
     if not stats.game_active:

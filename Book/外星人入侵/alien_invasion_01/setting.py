@@ -12,11 +12,13 @@ class Setting():
         self.bullet_width = 300
         self.bullet_height = 15
         self.bullet_allowed = 100
+        self.score_points = 10
         
-        self.alien_drop_factor = 10
+        self.alien_drop_factor = 50
         
         self.alien_img = './images/alien.bmp'
         self.speedup_scale = 1.1
+        self.score_scale = 1.5
         
         self.initialize_dynamic_settings()
     
@@ -26,8 +28,10 @@ class Setting():
         self.bullet_speed_factor = 30
         self.alien_speed_factor = 20
         self.alien_direction = 1
+        self.score_points = 10
         
     def increase_speed(self):
         self.ship_speed_factor *= self.speedup_scale
         self.bullet_speed_factor *= self.speedup_scale
         self.alien_speed_factor *= self.speedup_scale
+        self.score_points = int(self.score_points * self.score_scale)

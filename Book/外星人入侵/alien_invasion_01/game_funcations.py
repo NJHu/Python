@@ -34,32 +34,39 @@ def create_a_alien(al_setting, screen, aliens, row, line):
     alien.rect.y = alien.y
     aliens.add(alien)
 
-def update_bullets(al_setting, screen, ship, bullets, aliens):
+def update_bullets(al_setting, screen, ship, bullets, aliens, score_board, stats):
     bullets.update()
     # 删除子弹
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
     # 检测碰撞
-    check_bullets_collisions(al_setting, screen, ship, bullets, aliens)
+    check_bullets_collisions(al_setting, screen, ship, bullets, aliens, score_board, stats)
 
 # 检测碰撞
-def check_bullets_collisions(al_setting, screen, ship, bullets, aliens):
+def check_bullets_collisions(al_setting, screen, ship, bullets, aliens, score_board, stats):
     # 检测碰撞
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     if len(aliens) == 0:
         bullets.empty()
+        stats.level += 1
+        score_board.pre_level()
         create_aliens(al_setting, screen, aliens, ship.rect.height)
         al_setting.increase_speed()
+    if collisions:
+        for aliens in collisions.values():
+            stats.score += len(aliens) * al_setting.score_points
+        score_board.pre_score()
+        check_high_score(stats, score_board)
 
-def update_aliens(al_setting, screen, ship, bullets, aliens, stats):
+def update_aliens(al_setting, screen, ship, bullets, aliens, stats, score_board):
     check_aliens_edges(al_setting, aliens)
     aliens.update()
     if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(al_setting, screen, ship, bullets, aliens, stats)
-    check_aliens_bottom(al_setting, screen, ship, bullets, aliens, stats)
+        ship_hit(al_setting, screen, ship, bullets, aliens, stats, score_board)
+    check_aliens_bottom(al_setting, screen, ship, bullets, aliens, stats, score_board)
 
-def ship_hit(al_setting, screen, ship, bullets, aliens, stats):
+def ship_hit(al_setting, screen, ship, bullets, aliens, stats, score_board):
     if stats.ship_left > 0:
         stats.ship_left -= 1
         # 清空外星人
@@ -67,23 +74,28 @@ def ship_hit(al_setting, screen, ship, bullets, aliens, stats):
         bullets.empty()
         create_aliens(al_setting, screen, aliens, ship.rect.height)
         ship.ship_center()
+        score_board.pre_ship()
         sleep(1)
     else:
         stats.game_active = False
         pygame.mouse.set_visible(True)
 
-def check_aliens_bottom(al_setting, screen, ship, bullets, aliens, stats):
+def check_aliens_bottom(al_setting, screen, ship, bullets, aliens, stats, score_board):
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
-            ship_hit(al_setting, screen, ship, bullets, aliens, stats)
+            ship_hit(al_setting, screen, ship, bullets, aliens, stats, score_board)
             break
     
-def reset_game_state(al_setting, screen, ship, bullets, stats, aliens):
+def reset_game_state(al_setting, screen, ship, bullets, stats, aliens, score_board):
     al_setting.initialize_dynamic_settings()
     stats.game_active = True
     stats.reset_stats()
     ship.ship_center()
+    score_board.pre_score()
+    score_board.pre_high_score()
+    score_board.pre_level()
+    score_board.pre_ship()
     bullets.empty()
     aliens.empty()
     create_aliens(al_setting, screen, aliens, ship.rect.height)
@@ -107,7 +119,12 @@ def fire_bullet(al_setting, screen, ship, bullets):
         new_bullet = Bullet(screen, al_setting, ship)
         bullets.add(new_bullet)
 
-def update_screen(al_setting, screen, ship, bullets, aliens, play_button, stats):
+def check_high_score(stats, score_board):
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        score_board.pre_high_score()
+
+def update_screen(al_setting, screen, ship, bullets, aliens, play_button, stats, score_board):
     # 每次循环都重新绘制屏幕, 一定要先绘制颜色
         screen.fill(al_setting.bg_color)
         # 绘制飞船
@@ -119,6 +136,7 @@ def update_screen(al_setting, screen, ship, bullets, aliens, play_button, stats)
         # for alien in aliens.sprites():
         #     alien.blitme()
         aliens.draw(screen)
+        score_board.show()
         
         if stats.game_active == False:
             play_button.blitme()

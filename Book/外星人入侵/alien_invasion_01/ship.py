@@ -1,8 +1,10 @@
 import pygame
+from pygame.sprite import Sprite
 # from setting import Setting
 
-class Ship():
+class Ship(Sprite):
     def __init__(self, screen, setting):
+        super().__init__()
         """ 初始化飞船和设置初始位置 """
         self.screen = screen
         self.image = pygame.image.load(setting.ship_img)
