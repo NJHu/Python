@@ -14,4 +14,7 @@
 - [文件和异常](./Book/Python语言基础/文件和异常.md)
 
 ### [外星人入侵](./Book/外星人入侵)
-- [Project01](./Book/外星人入侵/alien_invasion_01)
+- [代码](./Book/外星人入侵/alien_invasion_01)
+
+### [数据可视化](./Book/数据可视化)
+- [代码](./Book/数据可视化/)
