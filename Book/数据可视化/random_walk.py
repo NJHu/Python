@@ -31,7 +31,19 @@ def main():
     while True:
         random_walk = RandomWalk()
         random_walk.fill_walk()
-        pyplot.scatter(random_walk.x_values, random_walk.y_values, s=15)    
+        point_numbers = list(range(random_walk.num_points))
+        
+        pyplot.scatter(random_walk.x_values, random_walk.y_values, s=5, 
+                       c=point_numbers, cmap=pyplot.cm.Blues, edgecolor='none')    
+        
+        # 突出起点和重点
+        pyplot.scatter(0, 0, c='green', edgecolors='none', s=100)
+        pyplot.scatter(random_walk.x_values[-1], random_walk.y_values[-1], c='red', edgecolors='none', s=100)
+        
+        # 隐藏最标轴
+        pyplot.axes().get_xaxis().set_visible(False)
+        pyplot.axes().get_yaxis().set_visible(False)
+        
         pyplot.show()
 
         keep_running = input("make(y/n) : ")
