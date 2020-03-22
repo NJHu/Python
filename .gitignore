@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+*.sqlite3
 
 # Distribution / packaging
 .Python
@@ -85,6 +86,8 @@ ipython_config.py
 
 # pyenv
 .python-version
+
+ll_env/
 
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
